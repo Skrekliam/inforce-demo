@@ -37,8 +37,7 @@ function Dashboard() {
   useEffect(() => {
       db.collection("products")
       .orderBy(sortField,sortWay)
-      .get()
-      .then((doc) =>
+      .onSnapshot((doc) =>
         // console.log(doc.docs)
         setItems(
           doc.docs.map((doc) => ({
@@ -47,6 +46,7 @@ function Dashboard() {
           }))
         )
       );
+      handleCloseNewProduct()
   }, [sortField,sortWay,]);
 
   console.log(items);
