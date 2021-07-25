@@ -1,21 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import Item from "./Item";
 import "./Dashboard.css";
 import NewProduct from "./NewProduct";
 import DeleteModal from "./DeleteModal";
 
 function Dashboard() {
+    const [open, setOpen] = React.useState(false);
+    const handleClose = () => {
+        setOpen(false);
+      };
+
+    const openDeleteModal = (id) => {
+        setOpen(id);
+    } 
+
   return (
     <div className="dashboard">
       <NewProduct />
-      <DeleteModal />
+      <DeleteModal open={open} handleClose={handleClose} />
       <div className="itemsList">
-        <Item />
-        <Item />
-        <Item />
-        <Item />
-        <Item />
-        <Item />
+        <Item openDeleteModal={openDeleteModal} />
+        <Item openDeleteModal={openDeleteModal} />
+        <Item openDeleteModal={openDeleteModal} />
+        <Item openDeleteModal={openDeleteModal} />
+        <Item openDeleteModal={openDeleteModal} />
       </div>
     </div>
   );

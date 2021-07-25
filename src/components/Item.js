@@ -20,7 +20,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function Item() {
+export default function Item({openDeleteModal}) {
   const classes = useStyles();
 
   return (
@@ -44,7 +44,7 @@ export default function Item() {
         <Button size="small" color="primary">
           More
         </Button>
-        <Button size="small" color="danger">
+        <Button size="small" color="secondary" onClick={() => openDeleteModal('3')}>
           Delete
         </Button>
       </CardActions>
