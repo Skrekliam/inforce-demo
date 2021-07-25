@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function NewProduct({ open, handleClose }) {
+export default function EditInfo({ id, open, handleClose }) {
   const classes = useStyles();
   const [name, setName] = useState("");
   const [count, setCount] = useState(0);
@@ -38,31 +38,33 @@ export default function NewProduct({ open, handleClose }) {
   const [url, setUrl] = useState("");
   const [weight, setWeight] = useState("");
   const [errors, setErrors] = useState("");
+
+  useEffect(() => {
+    db.collection("products")
+      .doc(id)
+      .get()
+      .then((res) => {
+        setName(res.data().name);
+        setCount(res.data().count);
+        setDescription(res.data().description);
+        setUrl(res.data().url);
+        setWeight(res.data().weight);
+      });
+  }, []);
+
   const handleSubmit = () => {
-    let customId = name.split(" ").join("");
-    let ref = db.collection("products").doc(customId);
+    let ref = db.collection("products").doc(id);
     ref.get().then((doc) => {
-      if (!doc.exists) {
+      
         ref
-          .set({
+          .update({
             name: name,
             count: Number(count),
             description: description,
             url: url,
             weight: weight,
           })
-          .then(() => {
-            setName("");
-            setCount("");
-            setDescription("");
-            setUrl("");
-            setWeight("");
-            setErrors("");
-            setErrors("Success");
-          });
-      } else {
-        setErrors("Please provide another name");
-      }
+     
     });
   };
 

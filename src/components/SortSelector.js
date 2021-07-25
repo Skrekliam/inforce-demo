@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SortSelector() {
+export default function SortSelector({handleSort}) {
   const classes = useStyles();
 
   return (
@@ -23,14 +23,14 @@ export default function SortSelector() {
         <InputLabel htmlFor="grouped-select">Sort by</InputLabel>
         <Select defaultValue="" id="grouped-select">
           <MenuItem value="">
-            <em>None</em>
+            <em onClick={() =>handleSort('name','asc')}>None</em>
           </MenuItem>
           <ListSubheader>Ascending</ListSubheader>
-          <MenuItem value={1}>Name</MenuItem>
-          <MenuItem value={2}>Items Count</MenuItem>
+          <MenuItem value={1} onClick={() =>handleSort('name','asc')}>Name</MenuItem>
+          <MenuItem value={2} onClick={() =>handleSort('count','asc')}>Items Count</MenuItem>
           <ListSubheader>Descending</ListSubheader>
-          <MenuItem value={3}>Name</MenuItem>
-          <MenuItem value={4}>Items Count</MenuItem>
+          <MenuItem value={3} onClick={() =>handleSort('name','desc')}>Name</MenuItem>
+          <MenuItem value={4} onClick={() =>handleSort('count','desc')}>Items Count</MenuItem>
         </Select>
       </FormControl>
     </div>

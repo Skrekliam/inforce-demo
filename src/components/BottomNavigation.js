@@ -3,11 +3,11 @@ import React from "react";
 import "./BottomNavigation.css";
 import SortSelector from "./SortSelector";
 
-function BottomNavigation({openNewProduct}) {
+function BottomNavigation({handleSort, openNewProduct}) {
   return (
     <div className="navigation">
       <div className="nav-item">
-        <SortSelector />
+        <SortSelector handleSort={handleSort} />
       </div>
       <div className="nav-item">
         {" "}

@@ -5,6 +5,7 @@ import CommentItem from "./CommentItem";
 import { db } from "./firebase";
 import firebase from "firebase";
 import "./InfoPage.css";
+import EditInfo from "./EditInfo";
 // import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,16 +27,24 @@ function InfoPage() {
   const [comments, setComments] = useState([]);
   const [sender, setSender] = useState("");
   const [text, setText] = useState("");
+  const [openEdit, setOpenEdit] = React.useState(false);
+
+  const handleCloseEdit = () => {
+    setOpenEdit(false);
+  };
+
+  const openEditModal = (id) => {
+    setOpenEdit(id);
+  };
+
 
   useEffect(() => {
     db.collection("products")
       .doc(id)
-      .get()
-      .then((doc) => {
+      .onSnapshot((doc) => {
         console.log(doc);
         if (doc.exists) setItem({ id: doc.id, product: doc.data() });
       })
-      .catch((err) => console.log(err));
   }, [id]);
 
   useEffect(() => {
@@ -52,6 +61,7 @@ function InfoPage() {
           }))
         );
       });
+      handleCloseEdit()
   }, [item]);
 
   const handleSubmit = () => {
@@ -86,6 +96,7 @@ function InfoPage() {
                 </span>
                 <p>{item.product.description}</p>
               </div>
+              <span className="editbtn" onClick={openEditModal}>Edit</span>
             </Paper>
           </div>
           <div className="commentSection">
@@ -133,6 +144,7 @@ function InfoPage() {
       ) : (
         <h1>No data for this product</h1>
       )}
+      <EditInfo id={id} open={openEdit} handleClose={handleCloseEdit} />
     </div>
   );
 }

@@ -8,7 +8,15 @@ import { db } from "./firebase";
 function Dashboard() {
   const [openDelete, setOpenDelete] = React.useState(false);
   const [openNewProduct, setOpenNewProduct] = React.useState(false);
+  const [sortField, setSortField] = useState("name")
+  const [sortWay, setSortWay] = useState("asc")
   const [items, setItems] = useState([]);
+
+    const handleSort = (field,way) => {
+        console.log(field,way)
+        setSortField(field)
+        setSortWay(way)
+    }
 
   const handleCloseDelete = () => {
     setOpenDelete(false);
@@ -27,7 +35,8 @@ function Dashboard() {
   };
 
   useEffect(() => {
-    db.collection("products")
+      db.collection("products")
+      .orderBy(sortField,sortWay)
       .get()
       .then((doc) =>
         // console.log(doc.docs)
@@ -38,7 +47,8 @@ function Dashboard() {
           }))
         )
       );
-  }, []);
+  }, [sortField,sortWay,]);
+
   console.log(items);
   return (
     <div className="dashboard">
@@ -49,7 +59,7 @@ function Dashboard() {
           <Item key={product.id} product={product} openDeleteModal={openDeleteModal} />
         ))}{" "}
       </div>
-      <BottomNavigation openNewProduct={openNewProductModal} />
+      <BottomNavigation handleSort={handleSort} openNewProduct={openNewProductModal} />
     </div>
   );
 }
