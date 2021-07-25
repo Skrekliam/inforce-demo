@@ -6,7 +6,7 @@ function CommentItem({item}) {
     <div className="comment">
       <h4>{item.data.author }</h4>
       <p>{item.data.text }</p>
-      <span>{new Date(item.data.time.seconds*1000).toDateString()}</span>
+      <span>{new Date(item.data?.time?.seconds*1000).toDateString()}</span>
       <hr />
     </div>
   );

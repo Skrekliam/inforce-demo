@@ -1,15 +1,32 @@
-import { Paper } from "@material-ui/core";
+import { Button, makeStyles, Paper, TextField } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import CommentItem from "./CommentItem";
 import { db } from "./firebase";
+import firebase from "firebase";
 import "./InfoPage.css";
 // import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+  },
+  textField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: "100%",
+  },
+}));
 
 function InfoPage() {
+  const classes = useStyles();
   let { id } = useParams();
   const [item, setItem] = useState();
   const [comments, setComments] = useState([]);
+  const [sender, setSender] = useState("");
+  const [text, setText] = useState("");
+
   useEffect(() => {
     db.collection("products")
       .doc(id)
@@ -35,9 +52,21 @@ function InfoPage() {
           }))
         );
       });
-    }, [item]);
-    
-    console.log('comments', comments)
+  }, [item]);
+
+  const handleSubmit = () => {
+    if (!text && !sender) return;
+    db.collection("products").doc(id).collection("comments").add({
+      text: text,
+      author: sender,
+      time: firebase.firestore.FieldValue.serverTimestamp(),
+    }).then(()=>{
+        setText("");
+        setSender("");
+    });
+  };
+
+  console.log("comments", comments);
   console.log(item, id);
   return (
     <div className="infoPage">
@@ -63,9 +92,40 @@ function InfoPage() {
             <Paper elevation={3}>
               <div className="comments">
                 <h3>Comments</h3>
-                {comments ? comments.map(el =>
-                <CommentItem item={el}/>
-                ) : "No comments"}
+                {comments
+                  ? comments.map((el) => <CommentItem item={el} />)
+                  : "No comments"}
+                  <br />
+                  <br />
+                <form autoComplete="off">
+                  <div className={classes.root}>
+                    <TextField
+                      className={classes.textField}
+                      error={!sender}
+                      id="standard-sender"
+                      label="Sender"
+                      value={sender}
+                      onChange={(e) => setSender(e.target.value)}
+                      helperText="Please provide name"
+                    />
+                    <TextField
+                      className={classes.textField}
+                      error={!text}
+                      id="standard-text"
+                      label="Text"
+                      value={text}
+                      onChange={(e) => setText(e.target.value)}
+                      helperText="Please provide text"
+                    />
+                    <Button
+                      variant="outlined"
+                      color="secondary"
+                      onClick={handleSubmit}
+                    >
+                      Submit
+                    </Button>
+                  </div>
+                </form>
               </div>
             </Paper>
           </div>
