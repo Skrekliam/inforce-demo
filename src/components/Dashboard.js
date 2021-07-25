@@ -5,7 +5,6 @@ import NewProduct from "./NewProduct";
 import DeleteModal from "./DeleteModal";
 import BottomNavigation from "./BottomNavigation";
 import { db } from "./firebase";
-
 function Dashboard() {
   const [openDelete, setOpenDelete] = React.useState(false);
   const [openNewProduct, setOpenNewProduct] = React.useState(false);

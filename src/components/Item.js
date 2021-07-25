@@ -7,6 +7,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import './Item.css';
 
@@ -25,6 +26,7 @@ export default function Item({product,openDeleteModal}) {
 
   return (
     <Card className={`${classes.root} item` }>
+        <Link className="link" to={product.id}>
       <CardActionArea>
         <CardMedia
           className={classes.media}
@@ -51,6 +53,7 @@ export default function Item({product,openDeleteModal}) {
           Delete
         </Button>
       </CardActions>
+      </Link>
     </Card>
   );
 }

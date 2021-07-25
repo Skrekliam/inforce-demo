@@ -3,3 +3,11 @@ body{
   background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
   margin-bottom: 20px;
 }
+.link{
+  text-decoration: none;
+
+}
+.link:focus, .link:hover, .link:visited, .link:link, .link:active {
+    text-decoration: none;
+    color: black;
+}
