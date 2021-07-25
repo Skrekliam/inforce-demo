@@ -45,15 +45,17 @@ export default function Item({product,openDeleteModal}) {
           </Typography>
         </CardContent>
       </CardActionArea>
+      </Link>
       <CardActions>
+      <Link className="link" to={product.id}>
         <Button size="small" color="primary">
           More
         </Button>
+        </Link>
         <Button size="small" color="secondary" onClick={() => openDeleteModal(product.id)}>
           Delete
         </Button>
       </CardActions>
-      </Link>
     </Card>
   );
 }

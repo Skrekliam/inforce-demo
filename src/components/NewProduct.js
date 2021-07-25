@@ -1,29 +1,73 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Modal from '@material-ui/core/Modal';
-import Backdrop from '@material-ui/core/Backdrop';
-import Fade from '@material-ui/core/Fade';
+import React, { useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Modal from "@material-ui/core/Modal";
+import Backdrop from "@material-ui/core/Backdrop";
+import Fade from "@material-ui/core/Fade";
+import { Button, TextField } from "@material-ui/core";
+import { db } from "./firebase";
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+  },
   modal: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
   paper: {
     backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
+    border: "2px solid #000",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
+  },
+  textField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: "300px",
   },
 }));
 
 export default function NewProduct({ open, handleClose }) {
   const classes = useStyles();
-  
+  const [name, setName] = useState("");
+  const [count, setCount] = useState(0);
+  const [description, setDescription] = useState("");
+  const [url, setUrl] = useState("");
+  const [weight, setWeight] = useState("");
+  const [errors, setErrors] = useState("");
+  const handleSubmit = () => {
+    let customId = name.split(" ").join("");
+    let ref = db.collection("products").doc(customId);
+    ref.get().then((doc) => {
+      if (!doc.exists) {
+        ref
+          .set({
+            name: name,
+            count: count,
+            description: description,
+            url: url,
+            weight: weight,
+          })
+          .then(() => {
+            setName("");
+            setCount("");
+            setDescription("");
+            setUrl("");
+            setWeight("");
+            setErrors("");
+            setErrors("Success");
+          });
+      } else {
+        setErrors("Please provide another name");
+      }
+    });
+  };
+
   return (
     <div>
-      
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -39,7 +83,63 @@ export default function NewProduct({ open, handleClose }) {
         <Fade in={open}>
           <div className={classes.paper}>
             <h2 id="transition-modal-title">New product</h2>
-            <p id="transition-modal-description">react-transition-group animates me.</p>
+            <form autoComplete="off">
+              <div className={classes.root}>
+                <TextField
+                  className={classes.textField}
+                  error={name.length < 3 || name.length > 32}
+                  id="standard-name"
+                  label="Name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  helperText="Please provide from 3 to 32 characters."
+                />
+                <TextField
+                  className={classes.textField}
+                  error={!url}
+                  id="standard-url"
+                  label="Image url"
+                  value={url}
+                  onChange={(e) => setUrl(e.target.value)}
+                  helperText="Please provide image url"
+                />
+                <TextField
+                  className={classes.textField}
+                  error={!count}
+                  id="standard-count"
+                  label="Count"
+                  value={count}
+                  onChange={(e) => setCount(e.target.value)}
+                  helperText="Please provide count"
+                />
+                <TextField
+                  className={classes.textField}
+                  error={description.length < 8 || description.length > 128}
+                  id="standard-description"
+                  label="Description"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  helperText="Please provide from 8 to 128 characters."
+                />
+                <TextField
+                  className={classes.textField}
+                  error={!weight.length}
+                  id="standard-weight"
+                  label="Weight"
+                  value={weight}
+                  onChange={(e) => setWeight(e.target.value)}
+                  helperText="Please provide weight."
+                />
+                <span>{errors ? errors : ""}</span>
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  onClick={handleSubmit}
+                >
+                  Submit
+                </Button>
+              </div>
+            </form>
           </div>
         </Fade>
       </Modal>
