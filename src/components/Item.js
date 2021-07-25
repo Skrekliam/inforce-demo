@@ -22,7 +22,7 @@ const useStyles = makeStyles({
 });
 
 export default function Item({product,openDeleteModal}) {
-  const classes = useStyles();
+  const classes = useStyles(); 
 
   return (
     <Card className={`${classes.root} item` }>
@@ -53,6 +53,7 @@ export default function Item({product,openDeleteModal}) {
         </Button>
         </Link>
         <Button size="small" color="secondary" onClick={() => openDeleteModal(product.id)}>
+            {/* here opens modal where you can delete selected post */}
           Delete
         </Button>
       </CardActions>

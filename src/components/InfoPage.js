@@ -42,8 +42,8 @@ function InfoPage() {
     db.collection("products")
       .doc(id)
       .onSnapshot((doc) => {
-        console.log(doc);
-        if (doc.exists) setItem({ id: doc.id, product: doc.data() });
+        // console.log(doc);
+        if (doc.exists) setItem({ id: doc.id, product: doc.data() }); // get item if it exists
       })
   }, [id]);
 
@@ -63,21 +63,24 @@ function InfoPage() {
       });
       handleCloseEdit()
   }, [item]);
+  
+//   using firebase firestore for getting data from database, and 
+// updating on every change, and pass it to state
 
   const handleSubmit = () => {
     if (!text && !sender) return;
     db.collection("products").doc(id).collection("comments").add({
       text: text,
       author: sender,
-      time: firebase.firestore.FieldValue.serverTimestamp(),
+      time: firebase.firestore.FieldValue.serverTimestamp(), //using server time
     }).then(()=>{
         setText("");
         setSender("");
     });
   };
 
-  console.log("comments", comments);
-  console.log(item, id);
+//   console.log("comments", comments);
+//   console.log(item, id);
   return (
     <div className="infoPage">
       {item ? (

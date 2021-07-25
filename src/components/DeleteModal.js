@@ -12,10 +12,10 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function DeleteModal({ open, handleClose }) {
+export default function DeleteModal({ open, handleClose }) { //to `open` goes id of selected item 
   const handleDanger = () => {
-    db.collection("products").doc(open).delete()
-    handleClose()
+    db.collection("products").doc(open).delete() //deleting using firebase methods
+    handleClose() //closing modal
   };
 
   return (
@@ -40,7 +40,8 @@ export default function DeleteModal({ open, handleClose }) {
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleDanger} color="secondary">
+          <Button onClick={handleDanger} color="secondary"> 
+          {/* start deleting process */}
             Delete
           </Button>
         </DialogActions>

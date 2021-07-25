@@ -13,7 +13,7 @@ function Dashboard() {
   const [items, setItems] = useState([]);
 
     const handleSort = (field,way) => {
-        console.log(field,way)
+        // console.log(field,way)
         setSortField(field)
         setSortWay(way)
     }
@@ -49,13 +49,16 @@ function Dashboard() {
       handleCloseNewProduct()
   }, [sortField,sortWay,]);
 
-  console.log(items);
+//   using firebase firestore for getting data from database, and 
+// updating on every change, and pass it to state
+
+//   console.log(items);
   return (
     <div className="dashboard">
       <NewProduct open={openNewProduct} handleClose={handleCloseNewProduct} />
       <DeleteModal open={openDelete} handleClose={handleCloseDelete} />
       <div className="itemsList">
-        {items.map((product) => (
+        {items.map((product) => ( //using map for itterating items
           <Item key={product.id} product={product} openDeleteModal={openDeleteModal} />
         ))}{" "}
       </div>

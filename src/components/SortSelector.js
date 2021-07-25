@@ -32,6 +32,7 @@ export default function SortSelector({handleSort}) {
           <MenuItem value={3} onClick={() =>handleSort('name','desc')}>Name</MenuItem>
           <MenuItem value={4} onClick={() =>handleSort('count','desc')}>Items Count</MenuItem>
         </Select>
+        {/* Selecting values for sorting */}
       </FormControl>
     </div>
   );

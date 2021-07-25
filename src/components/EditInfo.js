@@ -51,6 +51,8 @@ export default function EditInfo({ id, open, handleClose }) {
         setWeight(res.data().weight);
       });
   }, []);
+//read data from database, and passing to field for further editing
+
 
   const handleSubmit = () => {
     let ref = db.collection("products").doc(id);
@@ -59,7 +61,7 @@ export default function EditInfo({ id, open, handleClose }) {
         ref
           .update({
             name: name,
-            count: Number(count),
+            count: Number(count), //converting to number for correct sorting
             description: description,
             url: url,
             weight: weight,
@@ -67,6 +69,7 @@ export default function EditInfo({ id, open, handleClose }) {
      
     });
   };
+  // updating fields in database
 
   return (
     <div>
@@ -138,7 +141,14 @@ export default function EditInfo({ id, open, handleClose }) {
                   color="secondary"
                   onClick={handleSubmit}
                 >
-                  Submit
+                  Edit
+                </Button>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  onClick={handleClose}
+                >
+                  Close
                 </Button>
               </div>
             </form>

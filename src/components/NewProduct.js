@@ -39,7 +39,7 @@ export default function NewProduct({ open, handleClose }) {
   const [weight, setWeight] = useState("");
   const [errors, setErrors] = useState("");
   const handleSubmit = () => {
-    let customId = name.split(" ").join("");
+    let customId = name.split(" ").join(""); // creating custom id so it can be valid url
     let ref = db.collection("products").doc(customId);
     ref.get().then((doc) => {
       if (!doc.exists) {
@@ -59,6 +59,7 @@ export default function NewProduct({ open, handleClose }) {
             setWeight("");
             setErrors("");
             setErrors("Success");
+            //clearing input fields
           });
       } else {
         setErrors("Please provide another name");
@@ -136,7 +137,14 @@ export default function NewProduct({ open, handleClose }) {
                   color="secondary"
                   onClick={handleSubmit}
                 >
-                  Submit
+                  Add
+                </Button>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  onClick={handleClose}
+                >
+                  Cancel
                 </Button>
               </div>
             </form>
