@@ -3,6 +3,7 @@ import Item from "./Item";
 import "./Dashboard.css";
 import NewProduct from "./NewProduct";
 import DeleteModal from "./DeleteModal";
+import BottomNavigation from "./BottomNavigation";
 
 function Dashboard() {
     const [open, setOpen] = React.useState(false);
@@ -25,6 +26,7 @@ function Dashboard() {
         <Item openDeleteModal={openDeleteModal} />
         <Item openDeleteModal={openDeleteModal} />
       </div>
+      <BottomNavigation />
     </div>
   );
 }
