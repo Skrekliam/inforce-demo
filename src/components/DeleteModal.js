@@ -6,6 +6,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import Slide from "@material-ui/core/Slide";
+import { db } from "./firebase";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -13,7 +14,8 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 export default function DeleteModal({ open, handleClose }) {
   const handleDanger = () => {
-    //deleting
+    db.collection("products").doc(open).delete()
+    handleClose()
   };
 
   return (
@@ -31,7 +33,7 @@ export default function DeleteModal({ open, handleClose }) {
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
-            Do you really want to delete product {open}?
+            Do you really want to delete product <strong>{open}</strong>?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
