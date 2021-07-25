@@ -6,19 +6,29 @@ import DeleteModal from "./DeleteModal";
 import BottomNavigation from "./BottomNavigation";
 
 function Dashboard() {
-    const [open, setOpen] = React.useState(false);
-    const handleClose = () => {
-        setOpen(false);
+    const [openDelete, setOpenDelete] = React.useState(false);
+    const [openNewProduct, setOpenNewProduct] = React.useState(false);
+    const handleCloseDelete = () => {
+        setOpenDelete(false);
       };
 
     const openDeleteModal = (id) => {
-        setOpen(id);
+        setOpenDelete(id);
     } 
+
+    const handleCloseNewProduct = () => {
+        setOpenNewProduct(false);
+      };
+
+    const openNewProductModal = () => {
+        setOpenNewProduct(true);
+    } 
+
 
   return (
     <div className="dashboard">
-      <NewProduct />
-      <DeleteModal open={open} handleClose={handleClose} />
+      <NewProduct open={openNewProduct} handleClose={handleCloseNewProduct} />
+      <DeleteModal open={openDelete} handleClose={handleCloseDelete} />
       <div className="itemsList">
         <Item openDeleteModal={openDeleteModal} />
         <Item openDeleteModal={openDeleteModal} />
@@ -26,7 +36,7 @@ function Dashboard() {
         <Item openDeleteModal={openDeleteModal} />
         <Item openDeleteModal={openDeleteModal} />
       </div>
-      <BottomNavigation />
+      <BottomNavigation openNewProduct={openNewProductModal} />
     </div>
   );
 }

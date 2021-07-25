@@ -3,7 +3,7 @@ import React from "react";
 import "./BottomNavigation.css";
 import SortSelector from "./SortSelector";
 
-function BottomNavigation() {
+function BottomNavigation({openNewProduct}) {
   return (
     <div className="navigation">
       <div className="nav-item">
@@ -11,7 +11,7 @@ function BottomNavigation() {
       </div>
       <div className="nav-item">
         {" "}
-        <Button variant="outlined" color="primary">
+        <Button variant="outlined" color="primary" onClick={openNewProduct}>
           New product
         </Button>
       </div>
