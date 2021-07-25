@@ -20,7 +20,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function Item({openDeleteModal}) {
+export default function Item({product,openDeleteModal}) {
   const classes = useStyles();
 
   return (
@@ -28,15 +28,18 @@ export default function Item({openDeleteModal}) {
       <CardActionArea>
         <CardMedia
           className={classes.media}
-          image="https://img2.zakaz.ua/src.1617221702.ad72436478c_2021-03-31_YuliaT/src.1617221702.SNCPSG10.obj.0.1.jpg.oe.jpg.pf.jpg.150nowm.jpg.150x.jpg"
-          title="Contemplative Reptile"
+          image={product.product.url}
+          title={product.product.name}
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
-            Apple
+          {product.product.name}
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-            Fresh and sweet apple, without pesticides
+          <span className="small-text">
+          {product.product.count} pieces in stock
+          </span>
+          <Typography variant="body2" color="textSecondary" component="h3">
+          {product.description}
           </Typography>
         </CardContent>
       </CardActionArea>
@@ -44,7 +47,7 @@ export default function Item({openDeleteModal}) {
         <Button size="small" color="primary">
           More
         </Button>
-        <Button size="small" color="secondary" onClick={() => openDeleteModal('3')}>
+        <Button size="small" color="secondary" onClick={() => openDeleteModal(product.id)}>
           Delete
         </Button>
       </CardActions>

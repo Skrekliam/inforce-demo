@@ -6,8 +6,8 @@ import InfoPage from './components/InfoPage';
 function App() {
   return (
     <div className="App">
-      {/* <Dashboard /> */}
-      <InfoPage />
+      <Dashboard />
+      {/* <InfoPage /> */}
     </div>
   );
 }

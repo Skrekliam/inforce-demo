@@ -27,7 +27,7 @@ export default function DeleteModal({ open, handleClose }) {
         aria-describedby="alert-dialog-slide-description"
       >
         <DialogTitle id="alert-dialog-slide-title">
-          {"Use Google's location service?"}
+          {"Are you sure?"}
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
