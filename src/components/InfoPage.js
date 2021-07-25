@@ -18,7 +18,7 @@ function InfoPage() {
         <Paper elevation={3}>
           <div className="info">
             <h3>Apple</h3>
-            <span>12361231 pieces</span>
+            <span>12361231 pieces, Color: red, Weight: per 1 kg</span>
             <p>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum,
               aliquam?
